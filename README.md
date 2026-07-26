@@ -1,9 +1,27 @@
 # Jake the familiar 
 
+<p align="center">
+  <img src="assets/jake_stand.png" alt="Jake the familiar" width="230">
+</p>
+
 Jake from Adventure Time as a **desktop familiar** on Hyprland/Wayland: an
 animated overlay that doubles as an **arcane gateway** to **Claude Code** and
 to **local models via Ollama** — and, when you arm him, a little agent with
 real hands on your machine.
+
+<p align="center">
+  <img src="assets/frames/idle_0.png" height="72" alt="idle">
+  <img src="assets/frames/idle_1.png" height="72" alt="idle">
+  <img src="assets/frames/idle_2.png" height="72" alt="idle">
+  <img src="assets/frames/idle_3.png" height="72" alt="idle">
+  &nbsp;&nbsp;
+  <img src="assets/frames/walk_0.png" height="72" alt="walk">
+  <img src="assets/frames/walk_1.png" height="72" alt="walk">
+  <img src="assets/frames/walk_2.png" height="72" alt="walk">
+  <img src="assets/frames/walk_3.png" height="72" alt="walk">
+  <br>
+  <sub>the frames he is animated from — <b>idle</b> and <b>walk</b>, switched, not tweened</sub>
+</p>
 
 - Sprites cut from the sprite sheet (transparent), animated by **frame
   switching** (idle / walk / talk), with a cached glow.
