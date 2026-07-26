@@ -36,7 +36,7 @@ Jake starts on login (he is in the Hyprland autostart), together with
 The canvas around Jake is click-through: only his body (and the text box while
 you are chatting) takes input, so he never blocks the window underneath.
 
-## The memory thread 🧵
+## The memory thread 
 
 The conversation is not stored away in some window you have to open — it hangs
 over his head.
@@ -53,7 +53,7 @@ over his head.
 
 `/clear` wipes the thread (and the brain's memory of the conversation).
 
-## Agent mode ⚡
+## Agent mode 
 
 With the **Claude brain**, Jake can actually operate the machine: read and edit
 files, run shell commands, search the web. Ask him to do something and he does
