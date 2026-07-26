@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Summon Jake. This is what the Copilot key (Hyprland bind) calls.
+# If Jake is already alive it sends him a command over the socket, otherwise
+# it starts him up.
+#
+# Usage: jake-summon [summon|toggle|hide|chat|backend|nextmodel|stop|ask:<text>]
+#        (default: summon)
+
+CMD="${1:-summon}"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SOCK="${XDG_RUNTIME_DIR:-/tmp}/jake.sock"
+
+send() {
+    # push the command into the socket (socat if we have it, else python)
+    if command -v socat >/dev/null 2>&1; then
+        printf '%s' "$CMD" | socat - "UNIX-CONNECT:$SOCK" 2>/dev/null
+    else
+        python3 - "$SOCK" "$CMD" <<'PY' 2>/dev/null
+import socket, sys
+s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+s.connect(sys.argv[1]); s.sendall(sys.argv[2].encode()); s.close()
+PY
+    fi
+}
+
+if [ -S "$SOCK" ] && send; then
+    exit 0
+fi
+
+# not running: start him (run.sh sets LD_PRELOAD for layer-shell)
+exec "$ROOT/run.sh"

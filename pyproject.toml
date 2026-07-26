@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jake-familiar"
+version = "0.2.0"
+description = "Jake from Adventure Time as a desktop familiar and arcane gateway to Claude Code / Ollama on Hyprland/Wayland."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "chris1sflaggin" }]
+keywords = ["desktop-pet", "wayland", "hyprland", "gtk4", "claude", "ollama"]
+
+# GTK/cairo bindings are best provided by the system (pacman: python-gobject,
+# python-cairo, gtk4, gtk4-layer-shell). Listed here for completeness.
+dependencies = [
+  "PyGObject>=3.44",
+  "pycairo>=1.20",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.4", "mypy>=1.8"]
+
+[project.scripts]
+jake = "jake.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/chris1sflaggin/jaike"
+
+[tool.setuptools]
+packages = ["jake"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+# gateway/conversation are pure-Python; pet/sprites/__main__ touch GTK via gi.
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E402"]  # gi.require_version must run before the from-imports
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true   # gi / cairo have no bundled stubs
+warn_unused_ignores = true
+# The GTK modules lean on dynamic gi typing; keep strictness on the pure core.
+exclude = ["build/"]
+
+[[tool.mypy.overrides]]
+module = ["jake.pet", "jake.sprites", "jake.__main__"]
+disallow_untyped_defs = false

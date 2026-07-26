@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Find out what the Copilot key (or any key) actually emits.
+
+Opens a little window: press the Copilot key and it prints the keysym name
+and the modifiers, plus a ready-made bind line for ~/.config/hypr/hyprland.lua.
+"""
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Gdk", "4.0")
+from gi.repository import Gdk, Gtk
+
+MODS = [
+    (Gdk.ModifierType.SUPER_MASK, "SUPER"),
+    (Gdk.ModifierType.CONTROL_MASK, "CTRL"),
+    (Gdk.ModifierType.ALT_MASK, "ALT"),
+    (Gdk.ModifierType.SHIFT_MASK, "SHIFT"),
+]
+
+
+def on_key(ctrl, keyval, keycode, state):
+    name = Gdk.keyval_name(keyval) or f"0x{keyval:x}"
+    mods = [label for mask, label in MODS if state & mask]
+    combo = " + ".join(mods + [name])
+    print(f"keyval    = {name}")
+    print(f"keycode   = {keycode}")
+    print(f"modifiers = {mods}")
+    print()
+    print("Bind line for hyprland.lua (summons Jake):")
+    print(f'  hl.bind("{combo}", hl.dsp.exec_cmd(os.getenv("HOME") .. "/jake/bin/jake-summon toggle"))')
+    return True
+
+
+def main():
+    app = Gtk.Application(application_id="sh.jake.detectkey")
+
+    def activate(a):
+        win = Gtk.ApplicationWindow(application=a, title="Jake — key detector")
+        win.set_default_size(360, 120)
+        lbl = Gtk.Label(
+            label="Press the COPILOT KEY.\nWatch the terminal. (Esc to quit)"
+        )
+        lbl.set_justify(Gtk.Justification.CENTER)
+        win.set_child(lbl)
+        keys = Gtk.EventControllerKey()
+
+        def handler(c, kv, kc, st):
+            if kv == Gdk.KEY_Escape:
+                a.quit()
+                return True
+            return on_key(c, kv, kc, st)
+
+        keys.connect("key-pressed", handler)
+        win.add_controller(keys)
+        win.present()
+
+    app.connect("activate", activate)
+    app.run(None)
+
+
+if __name__ == "__main__":
+    main()
