@@ -1,4 +1,4 @@
-# Jake the familiar 🐶🪄
+# Jake the familiar 
 
 Jake from Adventure Time as a **desktop familiar** on Hyprland/Wayland: an
 animated overlay that doubles as an **arcane gateway** to **Claude Code** and
