@@ -10,6 +10,12 @@ to **local models via Ollama** — and, when you arm him, a little agent with
 real hands on your machine.
 
 <p align="center">
+  <img src="assets/jake_desktop.png" alt="Jake answering on the desktop" width="820">
+  <br>
+  <sub>click him, type, and the reply streams into the bubble while he thinks</sub>
+</p>
+
+<p align="center">
   <img src="assets/frames/idle_0.png" height="72" alt="idle">
   <img src="assets/frames/idle_1.png" height="72" alt="idle">
   <img src="assets/frames/idle_2.png" height="72" alt="idle">
